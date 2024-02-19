@@ -15,7 +15,7 @@ export default class Page {
     await this.page.goto(path, { waitUntil: "load" });
   }
 
-  async openMainPage() {
+  async openBaseUrl() {
     await this.openUrl("/");
   }
 

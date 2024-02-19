@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/login.page';
 import { MainPage } from '../pages/main.page';
 import { Helper } from '../helpers/helper';
-import credentials from '../fixed-data/credentials.json';
+import casual_creds from '../fixed-data/casual_credentials.json';
 
 let loginPage: LoginPage;
 let mainPage: MainPage;
@@ -13,7 +13,7 @@ test.describe('Login page testing', () => {
         loginPage = new LoginPage(page);
         mainPage = new MainPage(page);
         helper = new Helper(page, mainPage);
-        await loginPage.openMainPage();
+        await loginPage.openBaseUrl();
     })
 
     test('Verify all needed elements are visible', async () => {
@@ -29,12 +29,12 @@ test.describe('Login page testing', () => {
     })
 
     test('Verify all user credentials are valid', async () => {
-        for(let i = 0; i < credentials.length; i++) {
-            await loginPage.fillUsernameInput(credentials[i].login);
-            await loginPage.fillPasswordInput(credentials[i].password);
+        for(let i = 0; i < casual_creds.length; i++) {
+            await loginPage.fillUsernameInput(casual_creds[i].login);
+            await loginPage.fillPasswordInput(casual_creds[i].password);
             await loginPage.clickLoginButton();
             await expect(await mainPage.getLogoDiv()).toBeVisible();
-            if(i < credentials.length - 1) await helper.logout();
+            if(i < casual_creds.length - 1) await helper.logout();
         }
     })
 })

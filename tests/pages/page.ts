@@ -27,12 +27,8 @@ export default class Page {
     return this.page.getByText(text, { exact: true });
   }
 
-  async getElementText(selector: string) {
-    return this.page.locator(selector).textContent();
-  }
-
-  async clickElement(selector: string) {
-    await (await this.getElement(selector)).click();
+  async getElementText(locator: Locator) {
+    return locator.textContent();
   }
 
   async clickLocator(locator: Locator) {

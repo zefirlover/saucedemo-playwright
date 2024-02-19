@@ -4,6 +4,7 @@ const usernameInput = '#user-name';
 const passwordInput = '#password';
 const loginButton = '#login-button';
 const loginCredentialsText = '#login_credentials';
+const errorMessageText = '.error-message-container.error > h3'
 
 export class LoginPage extends Page {
     constructor(page: Page['page']) {
@@ -24,6 +25,14 @@ export class LoginPage extends Page {
 
     async getLoginCredentialsText() {
         return await super.getElement(loginCredentialsText);
+    }
+
+    async getErrorMessageText() {
+        return await super.getElement(errorMessageText);
+    }
+
+    async getErrorMessageContent() {
+        return await super.getElementText(await this.getErrorMessageText());
     }
 
     async fillUsernameInput(text: string) {

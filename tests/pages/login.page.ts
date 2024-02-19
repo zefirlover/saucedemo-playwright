@@ -25,4 +25,16 @@ export class LoginPage extends Page {
     async getLoginCredentialsText() {
         return await super.getElement(loginCredentialsText);
     }
+
+    async fillUsernameInput(text: string) {
+        await super.enterText(await this.getUsernameInput(), text);
+    }
+
+    async fillPasswordInput(text: string) {
+        await super.enterText(await this.getPasswordInput(), text);
+    }
+
+    async clickLoginButton() {
+        await super.clickLocator(await this.getLoginButton());
+    }
 }

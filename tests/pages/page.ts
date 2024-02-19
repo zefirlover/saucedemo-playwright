@@ -1,3 +1,4 @@
+import { Locator } from "@playwright/test";
 import { Page as PlaywrightPage } from "playwright";
 
 export default class Page {
@@ -18,19 +19,35 @@ export default class Page {
     await this.openUrl("/");
   }
 
-  async getElement(locator: string) {
-    return this.page.locator(locator);
+  async getElement(selector: string) {
+    return this.page.locator(selector);
   }
 
   async getElementByText(text: string) {
     return this.page.getByText(text, { exact: true });
   }
 
-  async getElementText(locator: string) {
-    return this.page.locator(locator).textContent();
+  async getElementText(selector: string) {
+    return this.page.locator(selector).textContent();
   }
 
-  async clickElement(locator: string) {
-    await (await this.getElement(locator)).click();
+  async clickElement(selector: string) {
+    await (await this.getElement(selector)).click();
+  }
+
+  async clickLocator(locator: Locator) {
+    await locator.click();
+  }
+
+  async enterText(locator: Locator, text: string) {
+    await locator.fill(text);
+  }
+
+  async pause(miliseconds: number) {
+    await this.page.waitForTimeout(miliseconds);
+  }
+
+  async waitForLocator(locator: Locator) {
+    await locator.waitFor({ state: 'visible' });
   }
 }

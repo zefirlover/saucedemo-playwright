@@ -5,6 +5,9 @@ const passwordInput = '#password';
 const loginButton = '#login-button';
 const loginCredentialsText = '#login_credentials';
 const errorMessageText = '.error-message-container.error > h3'
+const errorButton = '.error-button';
+const usernameInputErrorLogo = usernameInput+'~svg';
+const passwordInputErrorLogo = passwordInput+'~svg';
 
 export class LoginPage extends Page {
     constructor(page: Page['page']) {
@@ -31,6 +34,18 @@ export class LoginPage extends Page {
         return await super.getElement(errorMessageText);
     }
 
+    async getErrorButton() {
+        return await super.getElement(errorButton);
+    }
+
+    async getUsernameInputErrorLogo() {
+        return await super.getElement(usernameInputErrorLogo);
+    }
+
+    async getPasswordInputErrorLogo() {
+        return await super.getElement(passwordInputErrorLogo);
+    }
+
     async getErrorMessageContent() {
         return await super.getElementText(await this.getErrorMessageText());
     }
@@ -45,5 +60,9 @@ export class LoginPage extends Page {
 
     async clickLoginButton() {
         await super.clickLocator(await this.getLoginButton());
+    }
+
+    async clickErrorButton() {
+        await super.clickLocator(await this.getErrorButton());
     }
 }

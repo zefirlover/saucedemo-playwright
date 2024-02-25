@@ -16,16 +16,16 @@ test.describe('Login page testing', () => {
         helper = new Helper(page, mainPage, loginPage);
         await loginPage.openBaseUrl();
     })
-
+    
     test('Verify all needed elements are visible', async () => {
-        let elements = [
+        let webpageElements = [
             loginPage.getUsernameInput(),
             loginPage.getPasswordInput(),
             loginPage.getLoginButton(),
             loginPage.getLoginCredentialsText()
         ]
-        for(let i = 0; i < elements.length; i++) {
-            await expect(await elements[i]).toBeVisible();
+        for(let i = 0; i < webpageElements.length; i++) {
+            await expect(await webpageElements[i]).toBeVisible();
         }
     })
 
@@ -38,10 +38,25 @@ test.describe('Login page testing', () => {
     })
 
     test('Verify errors when logging in with invalid credentials', async () => {
+        let errorElements = [
+            loginPage.getUsernameInputErrorLogo(),
+            loginPage.getPasswordInputErrorLogo(),
+            loginPage.getErrorMessageText(),
+            loginPage.getErrorButton()
+        ]
         for(let i = 0; i < creds_with_errors.length; i++) {
             await helper.login(creds_with_errors[i].login, creds_with_errors[i].password);
-            await expect(await loginPage.getErrorMessageText()).toBeVisible();
+            for(let j = 0; j < errorElements.length; j++) {
+                await expect(await errorElements[j]).toBeVisible();
+            }
             expect(await loginPage.getErrorMessageContent()).toContain(creds_with_errors[i].error);
         }
+    })
+
+    test('Verify error block functionality', async () => {
+        await helper.login(creds_with_errors[0].login, creds_with_errors[0].password);
+        await loginPage.clickErrorButton();
+        await loginPage.pause(5000);
+        await expect(await loginPage.getErrorButton()).not.toBeVisible();
     })
 })

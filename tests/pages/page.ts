@@ -23,6 +23,14 @@ export default class Page {
     return this.page.locator(selector);
   }
 
+  async getElementsArray(selector: string) {
+    return this.page.locator(selector).all();
+  }
+
+  async getSelectOptionByValue(locator: Locator, value: string) {
+    return locator.selectOption({ value: value });
+  }
+
   async getElementByText(text: string) {
     return this.page.getByText(text, { exact: true });
   }

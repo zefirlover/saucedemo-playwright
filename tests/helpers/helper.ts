@@ -25,4 +25,17 @@ export class Helper {
             this.mainPage.clickLogoutButton();
         }
     }
+
+    async caseInsensitiveSort(stringsArray: (string | null)[]) {
+        if(stringsArray.includes(null)) throw new Error('Test skipped: Array contains null value.');
+        stringsArray.sort(function(a, b) {
+            let aStr = a!;
+            let bStr = b!;
+
+            let comparison = aStr.toLowerCase().localeCompare(bStr.toLowerCase());
+            if (comparison === 0) return aStr.localeCompare(bStr);
+            return comparison;
+        });
+        return stringsArray;
+    }
 }

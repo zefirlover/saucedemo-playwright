@@ -26,15 +26,29 @@ export class Helper {
         }
     }
 
-    async caseInsensitiveSort(stringsArray: (string | null)[]) {
-        if(stringsArray.includes(null)) throw new Error('Test skipped: Array contains null value.');
+    async caseInsensitiveSort(stringsArray: (string | null)[], ascending: boolean) {
+        if (stringsArray.includes(null)) throw new Error('Test skipped: Array contains null value.');
         stringsArray.sort(function(a, b) {
             let aStr = a!;
             let bStr = b!;
+    
+            let comparison = aStr.toLowerCase().localeCompare(bStr.toLowerCase(), undefined, {numeric: true});
+            if (comparison === 0) comparison = aStr.localeCompare(bStr, undefined, {numeric: true});
+    
+            return ascending ? comparison : -comparison;
+        });
+        return stringsArray;
+    }
 
-            let comparison = aStr.toLowerCase().localeCompare(bStr.toLowerCase());
-            if (comparison === 0) return aStr.localeCompare(bStr);
-            return comparison;
+    async sortCurrencyValues(stringsArray: (string | null)[], ascending: boolean) {
+        if (stringsArray.includes(null)) throw new Error('Array cannot contain null values.');
+    
+        stringsArray.sort((a, b) => {
+            const regex = /[\d\.]+/;
+            let aNum = parseFloat(a!.match(regex)?.[0] || "0");
+            let bNum = parseFloat(b!.match(regex)?.[0] || "0");
+    
+            return ascending ? aNum - bNum : bNum - aNum;
         });
         return stringsArray;
     }

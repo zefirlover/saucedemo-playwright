@@ -44,13 +44,20 @@ test.describe('Main page testing', () => {
         await mainPage.clickBmMenuCloseButton();
     })
 
-    // need to add here z to a sort, please rework helper.caseInsensitiveSort() method for that
     test('Verify text filters are working', async () => {
-        await mainPage.clickFilterDropdownButton();
-        await mainPage.getFilterAZOption();
-        let itemTextArray = await mainPage.getInventoryItemsTextInArray();
-        let sortedItemTextArray = await helper.caseInsensitiveSort(itemTextArray);
-        expect(itemTextArray).toStrictEqual(sortedItemTextArray);
+        let options = [
+            mainPage.getFilterAZOption(),
+            mainPage.getFilterZAOption()
+        ]
+        for(let option in options) {
+            let ascending = true;
+            if(option === "mainPage.getFilterZAOption()") ascending = false;
+            await mainPage.clickFilterDropdownButton();
+            option;
+            let itemTextArray = await mainPage.getInventoryItemsTextInArray();
+            let sortedItemTextArray = await helper.caseInsensitiveSort(itemTextArray, ascending);
+            expect(itemTextArray).toStrictEqual(sortedItemTextArray);
+        }
     })
 
     test.afterEach(async () => {

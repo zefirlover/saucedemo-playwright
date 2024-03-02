@@ -44,18 +44,29 @@ test.describe('Main page testing', () => {
         await mainPage.clickBmMenuCloseButton();
     })
 
-    test('Verify text filters are working', async () => {
-        let options = [
-            mainPage.getFilterAZOption(),
-            mainPage.getFilterZAOption()
-        ]
-        for(let option in options) {
+    test('Verify filters are working', async () => {
+        const azOption = await mainPage.getFilterAZOption();
+        const zaOption = await mainPage.getFilterZAOption();
+        const loHiOption = await mainPage.getFilterLoHiOption();
+        const hiLoOption = await mainPage.getFilterHiLoOption();
+
+        let options = [azOption, zaOption, loHiOption, hiLoOption]
+
+        for(let i = 0; i < options.length; i++) {
             let ascending = true;
-            if(option === "mainPage.getFilterZAOption()") ascending = false;
+            let itemTextArray: (string | null)[] = [];
+            let sortedItemTextArray: (string | null)[] = [];
+
+            if(options[i] == zaOption || options[i] == hiLoOption) ascending = false;
             await mainPage.clickFilterDropdownButton();
-            option;
-            let itemTextArray = await mainPage.getInventoryItemsTextInArray();
-            let sortedItemTextArray = await helper.caseInsensitiveSort(itemTextArray, ascending);
+            options[i];
+            if (options[i] === hiLoOption || options[i] === loHiOption) {
+                itemTextArray = await helper.getLocatorsTextInArray(await mainPage.getInventoryItemPrices());
+                sortedItemTextArray = await helper.sortCurrencyValues(itemTextArray, ascending);
+            } else {
+                itemTextArray = await helper.getLocatorsTextInArray(await mainPage.getInventoryItemNames());
+                sortedItemTextArray = await helper.caseInsensitiveSort(itemTextArray, ascending);
+            }
             expect(itemTextArray).toStrictEqual(sortedItemTextArray);
         }
     })

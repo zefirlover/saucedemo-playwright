@@ -12,6 +12,7 @@ const resetButton = '#reset_sidebar_link';
 const bmMenuCloseButton = '#react-burger-cross-btn';
 const logoutButton = '#logout_sidebar_link';
 const inventoryItemNames = '.inventory_item_name';
+const inventoryItemPrices = '.inventory_item_price';
 
 export class MainPage extends Page {
     constructor(page: Page['page']) {
@@ -80,6 +81,10 @@ export class MainPage extends Page {
 
     async getInventoryItemNames() {
         return await super.getElementsArray(inventoryItemNames);
+    }
+
+    async getInventoryItemPrices() {
+        return await super.getElementsArray(inventoryItemPrices);
     }
 
     async clickBurgerMenuButton() {

@@ -1,4 +1,5 @@
 import { Page } from '@playwright/test';
+import { Locator } from "@playwright/test";
 import { MainPage } from './../pages/main.page';
 import { LoginPage } from '../pages/login.page';
 
@@ -51,5 +52,14 @@ export class Helper {
             return ascending ? aNum - bNum : bNum - aNum;
         });
         return stringsArray;
+    }
+
+    async getLocatorsTextInArray(locatorArray: Locator[]) {
+        let textArray: (string | null)[] = [];
+        for(let item of locatorArray) {
+            let text = await this.mainPage.getElementText(item);
+            textArray.push(text);
+        }
+        return textArray;
     }
 }

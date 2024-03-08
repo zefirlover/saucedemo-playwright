@@ -13,6 +13,11 @@ const bmMenuCloseButton = '#react-burger-cross-btn';
 const logoutButton = '#logout_sidebar_link';
 const inventoryItemNames = '.inventory_item_name';
 const inventoryItemPrices = '.inventory_item_price';
+const addToCartBackpackButton = '#add-to-cart-sauce-labs-backpack';
+const addToCartBikeLightButton = '#add-to-cart-sauce-labs-bike-light';
+const removeBackpackButton = '#remove-sauce-labs-backpack';
+const removeBikeLightButton = '#remove-sauce-labs-bike-light';
+const shoppingCartBadge = shoppingCartButton+'>a>span';
 
 export class MainPage extends Page {
     constructor(page: Page['page']) {
@@ -63,6 +68,26 @@ export class MainPage extends Page {
         return await super.getElement(filterDropdownButton);
     }
 
+    async getAddToCartBackpackButton() {
+        return await super.getElement(addToCartBackpackButton);
+    }
+
+    async getAddToCartBikeLightButton() {
+        return await super.getElement(addToCartBikeLightButton);
+    }
+
+    async getRemoveBackpackButton() {
+        return await super.getElement(removeBackpackButton);
+    }
+
+    async getRemoveBikeLightButton() {
+        return await super.getElement(removeBikeLightButton);
+    }
+
+    async getShoppingCartBadge() {
+        return await super.getElement(shoppingCartBadge);
+    }
+
     async getFilterAZOption() {
         return await super.getSelectOptionByValue(await this.getFilterDropdownButton(), 'az');
     }
@@ -87,6 +112,10 @@ export class MainPage extends Page {
         return await super.getElementsArray(inventoryItemPrices);
     }
 
+    async getShoppingCartBadgeText() {
+        return await super.getElementText(await this.getShoppingCartBadge());
+    }
+
     async clickBurgerMenuButton() {
         await super.clickLocator(await this.getBurgerMenuButton());
     }
@@ -101,6 +130,22 @@ export class MainPage extends Page {
 
     async clickFilterDropdownButton() {
         await super.clickLocator(await this.getFilterDropdownButton());
+    }
+
+    async clickAddToCartBackpackButton() {
+        await super.clickLocator(await this.getAddToCartBackpackButton());
+    }
+
+    async clickAddToCartBikeLightButton() {
+        await super.clickLocator(await this.getAddToCartBikeLightButton());
+    }
+
+    async clickRemoveBackpackButton() {
+        await super.clickLocator(await this.getRemoveBackpackButton());
+    }
+
+    async clickRemoveBikeLightButton() {
+        await super.clickLocator(await this.getRemoveBikeLightButton());
     }
 
     async getInventoryItemsTextInArray() {

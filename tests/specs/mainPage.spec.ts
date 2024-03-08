@@ -71,6 +71,37 @@ test.describe('Main page testing', () => {
         }
     })
 
+    test('Verify shopping_cart_badge is visible when product added to cart', async () => {
+        let isShown = false;
+        await mainPage.clickAddToCartBackpackButton();
+        if (await (await mainPage.getShoppingCartBadge()).isVisible()) isShown = true;
+        await mainPage.clickRemoveBackpackButton();
+        await expect(await mainPage.getShoppingCartBadge()).not.toBeVisible();
+        expect(isShown).toStrictEqual(true);
+    })
+
+    test('Verify shopping_cart_badge number is correct', async () => {
+        let actions = [
+            await mainPage.getAddToCartBackpackButton(),
+            await mainPage.getAddToCartBikeLightButton(),
+            await mainPage.getRemoveBackpackButton(),
+            await mainPage.getRemoveBikeLightButton()
+        ]
+        let numbers: (string | null)[] = []
+        
+        if(!await (await mainPage.getShoppingCartBadge()).isVisible()) numbers.push("0");
+        for(let i = 0; i < actions.length; i++) {
+            await mainPage.clickLocator(actions[i]);
+            if(await (await mainPage.getShoppingCartBadge()).isVisible()) {
+                numbers.push(await mainPage.getShoppingCartBadgeText());
+            } else {
+                numbers.push("0")
+            }
+        }
+        console.log(numbers);
+        expect(numbers).toEqual(["0", "1", "2", "1", "0"]);
+    })
+
     test.afterEach(async () => {
         await mainPage.clickBurgerMenuButton();
         await mainPage.clickLogoutButton();

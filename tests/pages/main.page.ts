@@ -14,6 +14,7 @@ const logoutButton = '#logout_sidebar_link';
 const inventoryItemNames = '.inventory_item_name';
 const inventoryItemPrices = '.inventory_item_price';
 const addToCartBackpackButton = '#add-to-cart-sauce-labs-backpack';
+const backpackItemLabel = '#item_4_title_link>div'
 const addToCartBikeLightButton = '#add-to-cart-sauce-labs-bike-light';
 const removeBackpackButton = '#remove-sauce-labs-backpack';
 const removeBikeLightButton = '#remove-sauce-labs-bike-light';
@@ -88,6 +89,10 @@ export class MainPage extends Page {
         return await super.getElement(shoppingCartBadge);
     }
 
+    async getBackpackItemLabel() {
+        return await super.getElement(backpackItemLabel);
+    }
+
     async getFilterAZOption() {
         return await super.getSelectOptionByValue(await this.getFilterDropdownButton(), 'az');
     }
@@ -114,6 +119,10 @@ export class MainPage extends Page {
 
     async getShoppingCartBadgeText() {
         return await super.getElementText(await this.getShoppingCartBadge());
+    }
+
+    async getBackpackItemLabelText() {
+        return await super.getElementText(await this.getBackpackItemLabel());
     }
 
     async clickBurgerMenuButton() {
@@ -146,6 +155,10 @@ export class MainPage extends Page {
 
     async clickRemoveBikeLightButton() {
         await super.clickLocator(await this.getRemoveBikeLightButton());
+    }
+
+    async clickShoppingCartButton() {
+        await super.clickLocator(await this.getShoppingCartButton());
     }
 
     async getInventoryItemsTextInArray() {

@@ -89,7 +89,6 @@ test.describe('Main page testing', () => {
                 numbers.push("0")
             }
         }
-        console.log(numbers);
         expect(numbers).toEqual(["0", "1", "2", "1", "0"]);
     })
 

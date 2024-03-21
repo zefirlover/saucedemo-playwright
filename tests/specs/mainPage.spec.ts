@@ -1,23 +1,14 @@
-import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/login.page';
-import { MainPage } from '../pages/main.page';
-import { Helper } from '../helpers/helper';
+import { expect } from '@playwright/test';
+import { test } from '../../fixtures/fixtures';
 import casual_creds from '../fixed-data/casual_credentials.json';
 
-let loginPage: LoginPage;
-let mainPage: MainPage;
-let helper: Helper;
-
 test.describe('Main page testing', () => {
-    test.beforeEach(async ({ page }) => {
-        loginPage = new LoginPage(page);
-        mainPage = new MainPage(page);
-        helper = new Helper(page, mainPage, loginPage);
+    test.beforeEach(async ({ loginPage, helper }) => {
         await loginPage.openBaseUrl();
         await helper.login(casual_creds[0].login, casual_creds[0].password);
     })
 
-    test('Verify header elements are visible', async () => {
+    test('Verify header elements are visible', async ({ mainPage }) => {
         let headerElements = [
             mainPage.getHeaderContainer(),
             mainPage.getBurgerMenuButton(),
@@ -29,7 +20,7 @@ test.describe('Main page testing', () => {
         }
     })
 
-    test('Verify bm-menu elements are visible', async () => {
+    test('Verify bm-menu elements are visible', async ({ mainPage }) => {
         let bmMenuElements = [
             mainPage.getBmMenuContainer(),
             mainPage.getAllItemsButton(),
@@ -44,7 +35,7 @@ test.describe('Main page testing', () => {
         await mainPage.clickBmMenuCloseButton();
     })
 
-    test('Verify filters are working', async () => {
+    test('Verify filters are working', async ({ mainPage, helper }) => {
         const azOption = await mainPage.getFilterAZOption();
         const zaOption = await mainPage.getFilterZAOption();
         const loHiOption = await mainPage.getFilterLoHiOption();
@@ -71,7 +62,7 @@ test.describe('Main page testing', () => {
         }
     })
 
-    test('Verify shopping_cart_badge is visible when product added to cart', async () => {
+    test('Verify shopping_cart_badge is visible when product added to cart', async ({ mainPage }) => {
         let isShown = false;
         await mainPage.clickAddToCartBackpackButton();
         if (await (await mainPage.getShoppingCartBadge()).isVisible()) isShown = true;
@@ -80,7 +71,7 @@ test.describe('Main page testing', () => {
         expect(isShown).toStrictEqual(true);
     })
 
-    test('Verify shopping_cart_badge number is correct', async () => {
+    test('Verify shopping_cart_badge number is correct', async ({ mainPage }) => {
         let actions = [
             await mainPage.getAddToCartBackpackButton(),
             await mainPage.getAddToCartBikeLightButton(),
@@ -102,7 +93,7 @@ test.describe('Main page testing', () => {
         expect(numbers).toEqual(["0", "1", "2", "1", "0"]);
     })
 
-    test.afterEach(async () => {
+    test.afterEach(async ({ mainPage }) => {
         await mainPage.clickBurgerMenuButton();
         await mainPage.clickLogoutButton();
     })

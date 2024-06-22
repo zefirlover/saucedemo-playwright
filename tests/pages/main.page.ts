@@ -161,6 +161,14 @@ export class MainPage extends Page {
         await super.clickLocator(await this.getShoppingCartButton());
     }
 
+    async scrollToBurgerMenuButton() {
+        await super.scrollIntoView(await this.getBurgerMenuButton());
+    }
+
+    async scrollToBmMenuCloseButton() {
+        await super.scrollIntoView(await this.getBmMenuCloseButton());
+    }
+
     async getInventoryItemsTextInArray() {
         let textArray: (string | null)[] = [];
         for(let item of await this.getInventoryItemNames()) {

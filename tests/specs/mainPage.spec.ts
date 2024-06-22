@@ -29,8 +29,10 @@ test.describe('Main page testing', () => {
             mainPage.getBmMenuCloseButton()
         ]
         await mainPage.clickBurgerMenuButton();
+        await expect(await mainPage.getBmMenuCloseButton()).toBeVisible();
         for(let i = 0; i < bmMenuElements.length; i++) {
             await expect(await bmMenuElements[i]).toBeVisible();
+            await mainPage.scrollToBmMenuCloseButton();
         }
         await mainPage.clickBmMenuCloseButton();
     })
@@ -93,6 +95,7 @@ test.describe('Main page testing', () => {
     })
 
     test.afterEach(async ({ mainPage }) => {
+        await mainPage.scrollToBurgerMenuButton();
         await mainPage.clickBurgerMenuButton();
         await mainPage.clickLogoutButton();
     })

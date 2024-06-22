@@ -54,4 +54,8 @@ export default class Page {
   async waitForLocator(locator: Locator) {
     await locator.waitFor({ state: 'visible' });
   }
+
+  async scrollIntoView(locator: Locator) {
+    await locator.scrollIntoViewIfNeeded();
+  }
 }

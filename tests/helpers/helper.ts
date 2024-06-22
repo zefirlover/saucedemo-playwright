@@ -23,6 +23,7 @@ export class Helper {
     async logout() {
         if (await(await this.mainPage.getBurgerMenuButton()).isVisible()) {
             this.mainPage.clickBurgerMenuButton();
+            this.mainPage.scrollToBmMenuCloseButton();
             this.mainPage.clickLogoutButton();
         }
     }

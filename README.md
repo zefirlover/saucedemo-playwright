@@ -52,6 +52,10 @@ npx playwright test --ui
 npx playwright test login.spec.ts
 ```
 
+> [!NOTE]
+> With [this commit](https://github.com/zefirlover/saucedemo-playwright/commit/084f5c0b8b0a12fe73d1c06ce9d3e06f1052d4e5) you can no longer run tests for **webkit** using commands above, because while running tests *locally* on *Windows* the result wasn't stable.
+> You can still enable **webkit** by uncommenting a proper piece of code in `playwright.config.ts` file
+
 ## Build with
 
 - [Typescript](https://www.typescriptlang.org/) - a strongly typed programming language built on [Javascript](https://developer.mozilla.org/en-US/docs/Web/JavaScript) and used for this project

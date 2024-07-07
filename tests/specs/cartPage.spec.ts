@@ -34,6 +34,7 @@ test.describe('Cart page testing', () => {
     })
 
     test.afterEach(async ({ mainPage }) => {
+        await mainPage.scrollToBurgerMenuButton();
         await mainPage.clickBurgerMenuButton();
         await mainPage.clickLogoutButton();
     })
